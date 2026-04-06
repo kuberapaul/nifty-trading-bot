@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: nifty-trading-dashboard
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python dashboard_app.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9
+      - key: EMAIL_ADDRESS
+        sync: false
+
+  - type: cron
+    name: paper-trader-scheduler
+    plan: starter
+    schedule: "15 3 * * 1-5"  # 9:15 AM IST Monday-Friday (3:15 AM UTC)
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python paper_trader.py"
+    envVars:
+      - key: EMAIL_ADDRESS
+        sync: false
